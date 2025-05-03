@@ -27,7 +27,7 @@ $('BtnSubmit').on('click', function (event) {
         let custNIC = $('#floatingNIC').val();
         let custAddress = $('#floatingAddress').val();
         let custGender = $('#floatingGender').val();
-
+        
         if (custId === "" || custName === "" || custContact === "" || custEmail === "" || custNIC === "" || custAddress === "" || custGender === "") {
             Swal.fire({
                 title: "Enter data to All fields",
@@ -59,7 +59,7 @@ $('BtnSubmit').on('click', function (event) {
             showConfirmButton: false
         });
     }
-
+    
     //Customer Update
     if (btnTxt === 'Update') {
         let custId = $('#floatingId').val();
@@ -69,7 +69,7 @@ $('BtnSubmit').on('click', function (event) {
         let custNIC = $('#floatingNIC').val();
         let custAddress = $('#floatingAddress').val();
         let custGender = $('#floatingGender').val();
-
+        
         if (custId === "" || custName === "" || custContact === "" || custEmail === "" || custNIC === "" || custAddress === "" || custGender === "") {
             Swal.fire({
                 title: "Enter data to All fields",
@@ -77,18 +77,18 @@ $('BtnSubmit').on('click', function (event) {
             });
             return;
         }
-
+        
         customer_db.forEach(function (customer) {
             if (customer.id === custId) {
-                customer.cName = custName;
-                customer.cContact = custContact;
-                customer.cEmail = custEmail;
-                customer.cNIC = custNIC;
-                customer.cAddress = custAddress;
-                customer.cGender = custGender;
+                customer.name = custName;
+                customer.contactNumber = custContact;
+                customer.email = custEmail;
+                customer.nic = custNIC;
+                customer.address = custAddress;
+                customer.gender = custGender;
             }
         });
-
+        
     }
     clearFields();
     loadCustomers();
@@ -96,15 +96,15 @@ $('BtnSubmit').on('click', function (event) {
 
 function loadCustomers(){
     $('#tableBody').empty();
-
+    
     customer_db.map(function (customer) {
         let cId = customer.id;
-        let cName = customer.cName;
-        let cContact = customer.cContact;
-        let cEmail = customer.cEmail;
-        let cNIC = customer.cNIC;
-        let cAddress = customer.cAddress;
-        let cGender = customer.cGender;
+        let cName = customer.name;
+        let cContact = customer.contactNumber;
+        let cEmail = customer.email;
+        let cNIC = customer.nic;
+        let cAddress = customer.address;
+        let cGender = customer.gender;
 
         let data = `<tr>
                         <td>${cId}</td>
@@ -125,20 +125,20 @@ $('#tableBody').on('click', 'tr',function (event) {
     if ($(event.target).closest('#delete').length > 0) {
         return;
     }
-
+    
     const customer_index = $(this).index();
     const selected_customer = customer_db[customer_index];
-
+    
     $('#floatingId').val(selected_customer.id);
-    $('#floatingName').val(selected_customer.cName);
-    $('#floatingContact').val(selected_customer.cContact);
-    $('#floatingEmail').val(selected_customer.cEmail);
-    $('#floatingNIC').val(selected_customer.cNIC);
-    $('#floatingAddress').val(selected_customer.cAddress);
-    $('#floatingGender').val(selected_customer.cGender);
+    $('#floatingName').val(selected_customer.name);
+    $('#floatingContact').val(selected_customer.contactNumber);
+    $('#floatingEmail').val(selected_customer.email);
+    $('#floatingNIC').val(selected_customer.nic);
+    $('#floatingAddress').val(selected_customer.address);
+    $('#floatingGender').val(selected_customer.gender);
     $('#BtnSubmit').text('Update');
     $('#BtnReset').text('Cancel');
-
+    
     $('#floatingId').prop('disabled', true);
 });
 

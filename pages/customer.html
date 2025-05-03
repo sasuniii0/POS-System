@@ -17,10 +17,16 @@
             color: black;
         }
         section{
-            background: darkgrey;
+            background: #ffffff;
             border-radius: 30px;
             padding: 20px;
         }
+        #custInput{
+            margin: 20px;
+
+        }
+
+
     </style>
 
 </head>
@@ -75,45 +81,54 @@
     </nav>
 </header>
 <div class="container" >
-    <section>
+    <section id="custInput">
         <p class="fs-1" id="title">Customers</p>
         <form>
+            <!-- Text Inputs -->
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingId" placeholder="name@example.com">
-                <label for="floatingId">ID</label>
+                <input type="text" class="form-control" id="userId" name="user_id" placeholder=" " autocomplete="username">
+                <label for="userId">ID</label>
             </div>
+
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingName" placeholder="name@example.com">
-                <label for="floatingName">Name</label>
+                <input type="text" class="form-control" id="userName" name="user_name" placeholder=" " autocomplete="name">
+                <label for="userName">Name</label>
             </div>
+
+            <!-- Email -->
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com">
-                <label for="floatingEmail">Email</label>
+                <input type="email" class="form-control" id="userEmail" name="user_email" placeholder=" " autocomplete="email">
+                <label for="userEmail">Email</label>
             </div>
+
+            <!-- Address -->
             <div class="form-floating mb-3">
-                <textarea class="form-control" id="floatingAddress" placeholder="name@example.com" style="height: 100px"></textarea>
-                <label for="floatingAddress">Address</label>
+                <textarea class="form-control" id="userAddress" name="user_address" placeholder=" " style="height: 100px" autocomplete="street-address"></textarea>
+                <label for="userAddress">Address</label>
             </div>
+
+            <!-- NIC/Identification -->
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingNIC" placeholder="name@example.com">
-                <label for="floatingNIC">NIC</label>
+                <input type="text" class="form-control" id="userNIC" name="user_nic" placeholder=" " autocomplete="off">
+                <label for="userNIC">NIC</label>
             </div>
+
+            <!-- Contact -->
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingContact" placeholder="name@example.com">
-                <label for="floatingContact">Contact Number</label>
+                <input type="tel" class="form-control" id="userContact" name="user_contact" placeholder=" " autocomplete="tel">
+                <label for="userContact">Contact Number</label>
             </div>
-            <div class="form-floating">Gender
+
+            <!-- Gender (Improved Structure) -->
+            <div class="mb-3">
+                <label class="form-label">Gender</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                    <label class="form-check-label" for="exampleRadios1">
-                        Male
-                    </label>
+                    <input class="form-check-input" type="radio" name="user_gender" id="genderMale" value="male" checked autocomplete="sex">
+                    <label class="form-check-label" for="genderMale">Male</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                    <label class="form-check-label" for="exampleRadios2">
-                        Female
-                    </label>
+                    <input class="form-check-input" type="radio" name="user_gender" id="genderFemale" value="female" autocomplete="sex">
+                    <label class="form-check-label" for="genderFemale">Female</label>
                 </div>
             </div>
             <br>
@@ -123,7 +138,7 @@
     </section>
     <br>
     <section>
-        <table class="table table-hover" id="tableBody">
+        <table class="table table-hover" >
             <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -136,8 +151,8 @@
                 <th scope="col">Action</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
+            <tbody id="tableBody">
+            <!--<tr>
                 <th scope="row">C001</th>
                 <td>Sasuni</td>
                 <td>sasuni@gmail.com</td>
@@ -147,7 +162,7 @@
                 <td>FEmale</td>
                 <td><img src="../assets/icon/icons8-delete-90.png" width="35px" height="35px">
                     <img src="../assets/icon/icons8-edit-64.png" width="35px" height="35px"></td>
-            </tr>
+            </tr>-->
             </tbody>
         </table>
     </section>
