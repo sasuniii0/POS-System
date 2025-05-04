@@ -1,0 +1,17 @@
+body{
+    background: #dcdcdc;
+
+}
+#title{
+    font-weight: bold;
+    color: black;
+}
+section{
+    background: #ffffff;
+    border-radius: 30px;
+    padding: 20px;
+}
+#custInput{
+    margin: 20px;
+
+}
