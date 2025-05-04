@@ -14,7 +14,7 @@
 <div class="container" >
     <section id="custInput">
         <p class="fs-1" id="title">Customers</p>
-        <form>
+        <form id="customerForm">
             <!-- Text Inputs -->
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="floatingId" name="id" placeholder=" " autocomplete="username">
@@ -63,8 +63,9 @@
                 </div>
             </div>
             <br>
-            <input class="btn btn-primary" type="submit" value="Submit" id="BtnSubmit">
-            <input class="btn btn-primary" type="reset" value="Reset" id="BtnReset">
+            <button type="button" class="btn btn-success" id="BtnSubmit">Save </button>
+            <button type="button" class="btn btn-danger" id="BtnDelete">Delete</button>
+            <button type="button" class="btn btn-info" id="BtnReset">Reset</button>
         </form>
     </section>
     <br>

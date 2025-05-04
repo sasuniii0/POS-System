@@ -1,152 +1,172 @@
 import CustomerModel from "../model/customerModel.js";
 import { customer_db } from "../db/db.js";
 
-function clearFields() {
-    jQuery(document).ready(function($) {
-        $('#floatingId').val("");
-        $('#floatingName').val("");
-        $('#floatingContact').val("");
-        $('#floatingEmail').val("");
-        $('#floatingNIC').val("");
-        $('#floatingAddress').val("");
-        $('#floatingGender').val("");
-        $('#BtnSubmit').text('Submit');
-        $('#BtnReset').text('Reset');
-    });
-}
+// Initialize when page loads
+$(document).ready(function() {
+    loadCustomers();
 
-$('BtnSubmit').on('click', function (event) {
-    event.preventDefault();
+    // Form submission handler
+    $('#customerForm').on('submit', function(e) {
+        e.preventDefault();
+        handleCustomerSubmit();
+    });
+
+    // Reset button handler
+    $('#BtnReset').on('click', function() {
+        clearFields();
+    });
+
+    // Delete button handler
+    $('#tableBody').on('click', '.delete-btn', function(e) {
+        e.stopPropagation();
+        const index = $(this).closest('tr').index();
+        customer_db.splice(index, 1);
+        loadCustomers();
+        Swal.fire("Deleted!", "Customer removed successfully", "success");
+    });
+
+    // Row click handler for editing
+    $('#tableBody').on('click', 'tr', function() {
+        if ($(event.target).hasClass('delete-btn')) return;
+
+        const index = $(this).index();
+        const customer = customer_db[index];
+
+        $('#floatingId').val(customer.id).prop('disabled', true);
+        $('#floatingName').val(customer.name);
+        $('#floatingContact').val(customer.contactNumber);
+        $('#floatingEmail').val(customer.email);
+        $('#floatingNic').val(customer.nic);
+        $('#floatingAddress').val(customer.address);
+        $(`input[name="user_gender"][value="${customer.gender.toLowerCase()}"]`).prop('checked', true);
+        $('#BtnSubmit').text('Update');
+        $('#BtnReset').text('Cancel');
+    });
+});
+
+function handleCustomerSubmit() {
     let btnTxt = $('#BtnSubmit').text();
 
     if (btnTxt === 'Submit') {
-        let isNewCustomer = true;
+        // Get all form values
+        let custId = $('#floatingId').val().trim();
+        let custName = $('#floatingName').val().trim();
+        let custContact = $('#floatingContact').val().trim();
+        let custEmail = $('#floatingEmail').val().trim();
+        let custNIC = $('#floatingNic').val().trim();
+        let custAddress = $('#floatingAddress').val().trim();
+        let custGender = $('input[name="user_gender"]:checked').val();
 
-        let custId = $('#floatingId').val();
-        let custName = $('#floatingName').val();
-        let custContact = $('#floatingContact').val();
-        let custEmail = $('#floatingEmail').val();
-        let custNIC = $('#floatingNic').val();
-        let custAddress = $('#floatingAddress').val();
-        let custGender = $('#floatingGender').val();
-        
-        if (custId === "" || custName === "" || custContact === "" || custEmail === "" || custNIC === "" || custAddress === "" || custGender === "") {
-            Swal.fire({
-                title: "Enter data to All fields",
-                icon: 'error'
-            });
-            return
-        }
-        customer_db.forEach(function (customer) {
-            if (customer.cId === $('#floatingId').val()) {
-                Swal.fire({
-                    title: "Customer Already exists",
-                    text: "Please enter a different ID",
-                    icon: "error"
-                });
-                isNewCustomer = false;
-            }
-        });
-
-        if (!isNewCustomer) {
+        // Validate inputs
+        if (!custId || !custName || !custContact || !custEmail || !custNIC || !custAddress) {
+            Swal.fire("Error", "Please fill all fields", "error");
             return;
         }
-        let customer = new CustomerModel(custId, custName, custContact, custEmail, custNIC, custAddress, custGender);
-        customer_db.push(customer);
-        clearFields();
+
+        // Validate email format
+        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(custEmail)) {
+            Swal.fire("Error", "Please enter a valid email", "error");
+            return;
+        }
+
+        // Check for duplicate ID
+        if (customer_db.some(c => c.id === custId)) {
+            Swal.fire("Error", "Customer ID already exists", "error");
+            return;
+        }
+
+        // Add new customer
+        customer_db.push(new CustomerModel(
+            custId, custName, custContact, custEmail, custNIC, custAddress, custGender
+        ));
+
         Swal.fire({
-            title: "Customer Saved",
+            title: "Success!",
+            text: "Customer saved successfully",
             icon: "success",
             timer: 1500,
             showConfirmButton: false
         });
-    }
-    
-    //Customer Update
-    if (btnTxt === 'Update') {
-        let custId = $('#floatingId').val();
-        let custName = $('#floatingName').val();
-        let custContact = $('#floatingContact').val();
-        let custEmail = $('#floatingEmail').val();
-        let custNIC = $('#floatingNic').val();
-        let custAddress = $('#floatingAddress').val();
-        let custMale = $('#genderMale').val();
-        let custFemale = $('#genderFemale').val();
 
-        if (custId === "" || custName === "" || custContact === "" || custEmail === "" || custNIC === "" || custAddress === "" || custGender === "") {
-            Swal.fire({
-                title: "Enter data to All fields",
-                icon: 'error'
-            });
+        clearFields();
+        loadCustomers();
+    }
+    else if (btnTxt === 'Update') {
+        // Update existing customer
+        let custId = $('#floatingId').val();
+        let custName = $('#floatingName').val().trim();
+        let custContact = $('#floatingContact').val().trim();
+        let custEmail = $('#floatingEmail').val().trim();
+        let custNIC = $('#floatingNic').val().trim();
+        let custAddress = $('#floatingAddress').val().trim();
+        let custGender = $('input[name="user_gender"]:checked').val();
+
+        // Validate inputs
+        if (!custName || !custContact || !custEmail || !custNIC || !custAddress) {
+            Swal.fire("Error", "Please fill all fields", "error");
             return;
         }
-        
-        customer_db.forEach(function (customer) {
-            if (customer.id === custId) {
-                customer.name = custName;
-                customer.contactNumber = custContact;
-                customer.email = custEmail;
-                customer.nic = custNIC;
-                customer.address = custAddress;
-                customer.gender = custGender;
-            }
-        });
-        
+
+        // Find and update customer
+        let customerIndex = customer_db.findIndex(c => c.id === custId);
+        if (customerIndex !== -1) {
+            customer_db[customerIndex] = new CustomerModel(
+                custId, custName, custContact, custEmail, custNIC, custAddress, custGender
+            );
+
+            Swal.fire({
+                title: "Updated!",
+                text: "Customer updated successfully",
+                icon: "success",
+                timer: 1500,
+                showConfirmButton: false
+            });
+
+            clearFields();
+            loadCustomers();
+        }
     }
-    clearFields();
-    loadCustomers();
-});
-
-function loadCustomers(){
-    $('#tableBody').empty();
-    
-    customer_db.map(function (customer) {
-        let cId = customer.id;
-        let cName = customer.name;
-        let cContact = customer.contactNumber;
-        let cEmail = customer.email;
-        let cNIC = customer.nic;
-        let cAddress = customer.address;
-        let cGender = customer.gender;
-
-        let data = `<tr>
-                        <td>${cId}</td>
-                        <td>${cName}</td>
-                        <td>${cContact}</td>
-                        <td>${cEmail}</td>
-                        <td>${cNIC}</td>
-                        <td>${cAddress}</td>
-                        <td>${cGender}</td>
-                        <td><img src="../assets/icon/icons8-delete-90.png" width="35px" height="35px" id="delete"></td>
-                        
-                    </tr>`
-
-        $('#tableBody').append(data);
-    })
 }
-$('#tableBody').on('click', 'tr',function (event) {
-    if ($(event.target).closest('#delete').length > 0) {
+
+function loadCustomers() {
+    $('#tableBody').empty();
+
+    if (customer_db.length === 0) {
+        $('#tableBody').append(`
+            <tr>
+                <td colspan="8" class="text-center text-muted">No customers found</td>
+            </tr>
+        `);
         return;
     }
-    
-    const customer_index = $(this).index();
-    const selected_customer = customer_db[customer_index];
-    
-    $('#floatingId').val(selected_customer.id);
-    $('#floatingName').val(selected_customer.name);
-    $('#floatingContact').val(selected_customer.contactNumber);
-    $('#floatingEmail').val(selected_customer.email);
-    $('#floatingNIC').val(selected_customer.nic);
-    $('#floatingAddress').val(selected_customer.address);
-    $('#floatingGender').val(selected_customer.gender);
-    $('#BtnSubmit').text('Update');
-    $('#BtnReset').text('Cancel');
-    
-    $('#floatingId').prop('disabled', true);
-});
 
-$('#tableBody').on('click', '', function (event) {
-    const customer_index = $(this).index();
-    customer_db.splice(customer_index, 1);
-    loadCustomers();
-});
+    customer_db.forEach(customer => {
+        $('#tableBody').append(`
+            <tr>
+                <td>${customer.id}</td>
+                <td>${customer.name}</td>
+                <td>${customer.email}</td>
+                <td>${customer.address}</td>
+                <td>${customer.nic}</td>
+                <td>${customer.contactNumber}</td>
+                <td>${customer.gender}</td>
+                <td>
+                    <img src="../assets/icon/icons8-delete-90.png" 
+                         width="35px" height="35px" class="delete-btn" title="Delete">
+                </td>
+            </tr>
+        `);
+    });
+}
+
+function clearFields() {
+    $('#floatingId').val("").prop('disabled', false);
+    $('#floatingName').val("");
+    $('#floatingContact').val("");
+    $('#floatingEmail').val("");
+    $('#floatingNic').val("");
+    $('#floatingAddress').val("");
+    $('#genderMale').prop('checked', true);
+    $('#BtnSubmit').text('Submit');
+    $('#BtnReset').text('Reset');
+}

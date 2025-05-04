@@ -24,3 +24,12 @@ function loadOrderPage(){
         })
         .catch(error => console.error('Error loading order page:', error));
 }
+/*
+function loadDashboardPage(){
+    fetch('index.html')
+        .then(response => response.text())
+        .then(data => {
+            document.querySelector('section').innerHTML = data;
+        })
+        .catch(error => console.error('Error loading dashboard page:', error));
+}*/
