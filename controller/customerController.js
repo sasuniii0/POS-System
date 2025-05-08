@@ -113,7 +113,7 @@ $('#tableBody').on('click', 'tr', function() {
 
     $('#BtnSubmit').text('Update');
 
-    $(this).attr('data-selected-index', rowIndex);
+   // $(this).attr('data-selected-index', rowIndex);
 
     $('#tableBody tr').removeClass('table-primary');
     $(this).addClass('table-primary');
