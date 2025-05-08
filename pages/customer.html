@@ -68,6 +68,26 @@
 <div class="container" id="sec" >
     <section>
         <p class="fs-1" id="title">Customers</p>
+        <div class="container mt-3">
+            <div class="input-group">
+                <!-- Dropdown -->
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    Filter
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Option 1</a></li>
+                    <li><a class="dropdown-item" href="#">Option 2</a></li>
+                </ul>
+
+
+                <!-- Search Bar -->
+                <input type="text" class="form-control" placeholder="Search...">
+                <button class="btn btn-primary" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+        <br>
         <form id="customerForm">
             <!-- Text Inputs -->
             <div class="form-floating mb-3">
@@ -88,7 +108,7 @@
 
             <!-- Address -->
             <div class="form-floating mb-3">
-                <textarea class="form-control" id="floatingAddress" name="address" placeholder=" " style="height: 100px" autocomplete="street-address"></textarea>
+                <textarea class="form-control" id="floatingAddress" name="address" placeholder=" " style="height: 70px" autocomplete="street-address"></textarea>
                 <label for="floatingAddress">Address</label>
             </div>
 

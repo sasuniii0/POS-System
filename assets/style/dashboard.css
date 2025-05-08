@@ -2,18 +2,6 @@ body{
     background: #dcdcdc;
     font-size: 15px;
 }
-
-#title{
-    font-weight: bold;
-    font-size: 15px;
-    color: black;
-}
-#sec {
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
-}
-
 section{
     background: #ffffff;
     border-radius: 30px;
@@ -21,7 +9,7 @@ section{
     width: 50%;
     margin: 10px;
     gap: 10px;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
 }
-.form-floating{
-}
-
