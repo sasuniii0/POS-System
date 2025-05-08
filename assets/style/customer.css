@@ -1,17 +1,26 @@
 body{
     background: #dcdcdc;
+    font-size: 15px;
 
 }
+
 #title{
     font-weight: bold;
     color: black;
 }
+#sec {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
 section{
     background: #ffffff;
     border-radius: 30px;
-    padding: 20px;
-}
-#custInput{
-    margin: 20px;
+    padding: 15px;
+    width: 50%;
+    margin: 10px;
+    gap: 10px;
 
 }
+
