@@ -1,6 +1,82 @@
 import CustomerModel from "../model/customerModel.js";
-import { customer_db } from "../db/db.js";
+import {customer_db} from "../db/db.js";
 
+//load customer records
+function loadCustomers(){
+    $('#tableBody').empty();
+    customer_db.map((customer, index) => {
+        let name = customer.name;
+        let contact = customer.contactNumber;
+        let email = customer.email;
+        let nic = customer.nic;
+        let address = customer.address;
+
+        let data = `<tr>
+                            <td>${index +1 }</td>
+                            <td>${name}</td>
+                            <td>${contact}</td>
+                            <td>${email}</td>
+                            <td>${nic}</td>
+                            <td>${address}</td>
+        </tr>`
+        $('#tableBody').append(data);
+    })
+}
+//save
+$('#BtnSubmit').on('click', function(){
+    let name = $('#floatingName').val();
+    let contact = $('#floatingContact').val();
+    let email = $('#floatingEmail').val();
+    let nic = $('#floatingNic').val();
+    let address = $('#floatingAddress').val();
+
+    if (name ==="" || contact === "" || email === "" || nic === "" || address === "" ) {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Invalid Inputs',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+    } else{
+        let customer_data = new CustomerModel(name,contact,email,nic,address);
+        customer_db.push(customer_data);
+        console.log(customer_db);
+        loadCustomers();
+
+        Swal.fire({
+            title: "Added Successfully!",
+            icon: "success",
+            timer: 1500,
+            draggable:true
+        })
+    }
+})
+
+$('#tableBody').on('click', function(){
+    let indx = $(this).index();
+    let obj = customer_db[indx];
+    console.log(obj);
+
+    let name = obj.name;
+    let contact = obj.contactNumber;
+    let email = obj.email;
+    let nic = obj.nic;
+    let address = obj.address;
+
+    $('#floatingName').val(name);
+    $('#floatingContact').val(contact);
+    $('#floatingEmail').val(email);
+    $('#floatingNic').val(nic);
+    $('#floatingAddress').val(address);
+})
+
+
+
+
+
+
+
+/*
 // Initialize when page loads
 $(document).ready(function() {
     loadCustomers();
@@ -169,4 +245,4 @@ function clearFields() {
     $('#genderMale').prop('checked', true);
     $('#BtnSubmit').text('Submit');
     $('#BtnReset').text('Reset');
-}
+}*/
