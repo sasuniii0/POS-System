@@ -1,9 +1,9 @@
-export default class OrderModel{
-    constructor(customerName,itemName, price, quantityOnHand, pic) {
-        this.customerName = customerName;
-        this.itemName = itemName;
-        this.price = price;
+export default class OrderModel {
+    constructor(customerId,itemId,name,quantityOnHand,price) {
+        this.customerId = customerId;
+        this.itemId = itemId;
+        this.name=name;
         this.quantityOnHand = quantityOnHand;
-        this.pic = pic;
+        this.price = price;
     }
 }
