@@ -1,15 +1,98 @@
-body{
-    background: #dcdcdc;
-    font-size: 15px;
+:root {
+    --primary-color: #4e73df;
+    --secondary-color: #1cc88a;
+    --accent-color: #f6c23e;
+    --danger-color: #e74a3b;
+    --light-bg: #f8f9fc;
 }
-section{
-    background: #ffffff;
-    border-radius: 30px;
-    padding: 15px;
-    width: 50%;
-    margin: 10px;
-    gap: 10px;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
+
+body {
+    background-color: #f5f7fb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.nav-link {
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
+}
+
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem 0 rgba(58, 59, 69, 0.2);
+}
+
+.metric-card {
+    border-left: 0.25rem solid;
+    height: 100%;
+}
+
+.metric-card.bg-primary {
+    border-left-color: var(--primary-color);
+}
+
+.metric-card.bg-success {
+    border-left-color: var(--secondary-color);
+}
+
+.metric-card.bg-warning {
+    border-left-color: var(--accent-color);
+}
+
+.metric-card.bg-danger {
+    border-left-color: var(--danger-color);
+}
+
+.metric-card .card-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+#salesChart {
+    width: 100% !important;
+    height: 200px !important;
+}
+
+.alert-card {
+    border-left: 0.25rem solid var(--accent-color);
+}
+
+.alert-card .card-header {
+    background-color: rgba(246, 194, 62, 0.1);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(78, 115, 223, 0.05);
+}
+
+.list-group-item {
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.list-group-item:hover {
+    border-left-color: var(--danger-color);
+    transform: translateX(5px);
+}
+
+.current-date {
+    background-color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.15rem 0.5rem 0 rgba(58, 59, 69, 0.1);
+    display: inline-block;
+    margin: 1rem 0;
 }
