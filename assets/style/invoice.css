@@ -1,0 +1,96 @@
+:root {
+    --primary-color: #4e73df;
+    --secondary-color: #f8f9fc;
+    --accent-color: #dddfeb;
+}
+
+body {
+    background-color: #dcdcdc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.row{
+    padding: 15px;
+}
+
+.card {
+    border: none;
+    border-radius: 0.35rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.card-header {
+    background-color: #f8f9fc;
+    border-bottom: 1px solid #e3e6f0;
+}
+
+.invoice-card {
+    transition: all 0.3s ease;
+}
+
+.invoice-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem 0 rgba(58, 59, 69, 0.2);
+}
+
+.invoice-status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.status-paid {
+    background-color: #1cc88a;
+    color: white;
+}
+
+.status-pending {
+    background-color: #f6c23e;
+    color: #000;
+}
+
+.status-cancelled {
+    background-color: #e74a3b;
+    color: white;
+}
+
+.invoice-table th {
+    border-top: none;
+    font-weight: 600;
+    color: #5a5c69;
+}
+
+.invoice-total {
+    background-color: #f8f9fc;
+    font-weight: bold;
+}
+
+.print-btn {
+    background-color: var(--primary-color);
+    border: none;
+}
+
+.print-btn:hover {
+    background-color: #2e59d9;
+}
+#padding{
+    padding: 20px;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .invoice-print, .invoice-print * {
+        visibility: visible;
+    }
+    .invoice-print {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+    .no-print {
+        display: none !important;
+    }
+}

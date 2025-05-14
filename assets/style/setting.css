@@ -1,0 +1,23 @@
+body{
+    background: #dcdcdc;
+}
+.settings-card {
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.settings-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.settings-icon {
+    font-size: 1.5rem;
+    margin-right: 10px;
+    color: #4e73df;
+}
+.nav-pills .nav-link.active {
+    background-color: #4e73df;
+}
+.nav-pills .nav-link {
+    color: #5a5c69;
+}
