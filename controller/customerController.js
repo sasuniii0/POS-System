@@ -16,10 +16,10 @@ function loadCustomers(){
         let data = `<tr>
                             <td>${index +1 }</td>
                             <td>${name}</td>
-                            <td>${contact}</td>
                             <td>${email}</td>
-                            <td>${nic}</td>
                             <td>${address}</td>
+                            <td>${nic}</td>
+                            <td>${contact}</td>
         </tr>`
         $('#tableBody').append(data);
     })

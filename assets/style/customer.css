@@ -1,22 +1,86 @@
-body{
-    background: #dcdcdc;
-    font-size: 15px;
+:root {
+    --primary-color: #4e73df;
+    --secondary-color: #1cc88a;
+    --accent-color: #f6c23e;
+    --light-bg: #f8f9fc;
+}
+
+body {
+    background-color: #f5f7fb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.nav-link {
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
 }
 
 #sec {
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+    padding: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
-section{
-    background: #ffffff;
-    border-radius: 30px;
-    padding: 15px;
-    width: 50%;
-    margin: 10px;
-    gap: 10px;
-}
-.form-floating{
+#title {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid ;
 }
 
+.form-floating > .form-control {
+    border-left: 3px solid ;
+}
+
+.form-floating > .form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+}
+
+.btn-success {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-info {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(78, 115, 223, 0.05);
+    transform: scale(1.01);
+    transition: all 0.2s ease;
+}
+
+.table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 500;
+}
+
+.input-group .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+#customerForm {
+    background-color: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.action-buttons .btn {
+    margin-right: 0.5rem;
+    min-width: 100px;
+}
