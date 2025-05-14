@@ -1,232 +1,319 @@
 import OrderModel from "../model/orderModel.js";
 import { order_db } from "../db/db.js";
 
-export default class OrderController {
-    constructor() {
-        this.orderModel = new OrderModel();
-        this.currentOrder = {
-            customer: null,
-            items: [],
-            total: 0
-        };
-        this.initialize();
+let cartItems = [];
+let items = [
+    {
+        id: 1,
+        desc: "Cetaphil",
+        price: 20000.00,
+        stock: 200,
+        picture: "../assets/photos/download.jpg"
+    },
+    {
+        id: 2,
+        desc: "Dove",
+        price: 30000.00,
+        stock: 100,
+        picture: "../assets/photos/images.jpg"
+    },
+    {
+        id: 3,
+        desc: "Lux",
+        price: 15000.00,
+        stock: 50,
+        picture: "../assets/photos/download.jpg"
+    },
+    {
+        id: 4,
+        desc: "Nivea",
+        price: 50000.00,
+        stock: 20,
+        picture: "../assets/photos/images.jpg"
+    },
+    {
+        id: 5,
+        desc: "Pond's",
+        price: 25000.00,
+        stock: 10,
+        picture: "../assets/photos/images.jpg"
+    },
+    {
+        id: 6,
+        desc: "Vaseline",
+        price: 18000.00,
+        stock: 5,
+        picture: "../assets/photos/download.jpg"
+    }
+];
+
+const customers = [
+    { name: "John" },
+    { name: "Ann" },
+    { name: "Sasuni" },
+    { name: "Minuki" },
+    { name: "Chanuli" }
+];
+
+$(document).ready(function() {
+    getItems();
+    initCustomers();
+    updateCartDisplay();
+});
+
+function getItems(filter = "") {
+    const container = $("#item_tbody");
+    container.empty();
+
+    const filteredItems = items.filter(item =>
+        item.desc.toLowerCase().includes(filter.toLowerCase())
+    );
+
+    if (filteredItems.length === 0) {
+        container.append('<p class="text-muted">No items found</p>');
+        return;
     }
 
-    initialize() {
-        this.loadItems();
-        this.loadCustomers();
-        this.setupEventListeners();
-    }
-
-    loadItems() {
-        const sidePage = document.getElementById('sidePg');
-        sidePage.innerHTML = '';
-
-        order_db.items.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.style.width = '18rem';
-            card.innerHTML = `
-                <img src="${item.image}" class="card-img-top" alt="${item.name}">
+    filteredItems.forEach((item, index) => {
+        const card = `
+            <div class="card mb-3" style="width: 18rem;">
+                <img src="${item.picture}" class="card-img-top" alt="${item.desc}">
                 <div class="card-body">
-                    <h5 class="card-title">${item.name}</h5>
-                    <p class="card-text">${item.description}</p>
-                    <p class="card-text">$${item.price.toFixed(2)}</p>
-                    <div class="cart-options">
-                        <img src="../assets/icon/shopping-cart.png" width="30px" height="30px" class="shopping-cart">
-                        <button class="btn btn-primary add-to-cart" data-id="${item.id}">Add to Cart</button>
-                    </div>
+                    <h5 class="card-title">${item.desc}</h5>
+                    <p class="card-text">Rs. ${item.price.toFixed(2)}</p>
+                    <p class="text-muted">In stock: ${item.stock}</p>
+                    <button class="btn btn-primary add-to-cart" data-id="${item.id}">
+                        Add to Cart
+                    </button>
                 </div>
-            `;
-            sidePage.appendChild(card);
-        });
-    }
-
-    loadCustomers() {
-        const customerDropdownMenu = document.querySelector('.dropdown-center .dropdown-menu');
-        customerDropdownMenu.innerHTML = '';
-
-        order_db.customers.forEach(customer => {
-            const li = document.createElement('li');
-            const a = document.createElement('a');
-            a.className = 'dropdown-item';
-            a.href = '#';
-            a.textContent = customer.name;
-            a.dataset.id = customer.id;
-            li.appendChild(a);
-            customerDropdownMenu.appendChild(li);
-        });
-    }
-
-    setupEventListeners() {
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('add-to-cart')) {
-                const itemId = e.target.dataset.id;
-                this.addToCart(itemId);
-            }
-
-            if (e.target.classList.contains('quantity-maintainer')) {
-                const card = e.target.closest('.card-cart');
-                if (card) {
-                    const itemId = card.dataset.id;
-                    if (e.target.getAttribute('src').includes('plus')) {
-                        this.increaseQuantity(itemId);
-                    } else if (e.target.getAttribute('src').includes('minus')) {
-                        this.decreaseQuantity(itemId);
-                    }
-                }
-            }
-
-            if (e.target.classList.contains('dropdown-item') && e.target.closest('.dropdown-center')) {
-                const customerId = e.target.dataset.id;
-                this.selectCustomer(customerId);
-            }
-        });
-
-        const continueButton = document.getElementById('continue');
-        if (continueButton) {
-            continueButton.addEventListener('click', () => this.placeOrder());
-        }
-    }
-
-    addToCart(itemId) {
-        const item = order_db.items.find(i => i.id === itemId);
-        if (!item) return;
-
-        const existingItem = this.currentOrder.items.find(i => i.id === itemId);
-
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            this.currentOrder.items.push({
-                ...item,
-                quantity: 1
-            });
-        }
-
-        this.updateCartDisplay();
-    }
-
-    increaseQuantity(itemId) {
-        const item = this.currentOrder.items.find(i => i.id === itemId);
-        if (item) {
-            item.quantity += 1;
-            this.updateCartDisplay();
-        }
-    }
-
-    decreaseQuantity(itemId) {
-        const itemIndex = this.currentOrder.items.findIndex(i => i.id === itemId);
-        if (itemIndex !== -1) {
-            const item = this.currentOrder.items[itemIndex];
-            item.quantity -= 1;
-
-            if (item.quantity <= 0) {
-                this.currentOrder.items.splice(itemIndex, 1);
-            }
-
-            this.updateCartDisplay();
-        }
-    }
-
-    selectCustomer(customerId) {
-        const customer = order_db.customers.find(c => c.id === customerId);
-        if (customer) {
-            this.currentOrder.customer = customer;
-            const customerDropdown = document.querySelector('.dropdown-center button');
-            customerDropdown.textContent = customer.name;
-
-            const customerPhoto = document.querySelector('#photo img');
-            const customerName = document.querySelector('#photo').firstChild;
-            customerName.textContent = customer.name;
-        }
-    }
-
-    updateCartDisplay() {
-        const cartContainer = document.getElementById('cart');
-        cartContainer.innerHTML = '';
-
-        let total = 0;
-
-        this.currentOrder.items.forEach(item => {
-            const itemTotal = item.price * item.quantity;
-            total += itemTotal;
-
-            const card = document.createElement('div');
-            card.className = 'card-cart';
-            card.style.width = '18rem';
-            card.dataset.id = item.id;
-            card.innerHTML = `
-                <img src="${item.image}" class="cart-image" alt="${item.name}">
-                <div class="card-body">
-                    <h5 class="card-title">${item.name}</h5>
-                    <p class="card-text">$${item.price.toFixed(2)} x ${item.quantity} = $${itemTotal.toFixed(2)}</p>
-                    <div class="cart-options">
-                        <img src="../assets/icon/plus.png" width="30px" height="30px" class="quantity-maintainer">
-                        <p class="quantity-handling">${item.quantity}</p>
-                        <img src="../assets/icon/minus.png" width="30px" height="30px" class="quantity-maintainer">
-                    </div>
-                </div>
-            `;
-
-            const wrapper = document.createElement('span');
-            wrapper.className = 'border border-info';
-            wrapper.appendChild(card);
-            cartContainer.appendChild(wrapper);
-        });
-
-        this.currentOrder.total = total;
-
-        const continueButton = document.getElementById('continue');
-        if (continueButton) {
-            continueButton.disabled = this.currentOrder.items.length === 0 || !this.currentOrder.customer;
-        }
-    }
-
-    placeOrder() {
-        if (this.currentOrder.items.length === 0) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Empty Order',
-                text: 'Please add items to your order before placing it.'
-            });
-            return;
-        }
-
-        if (!this.currentOrder.customer) {
-            Swal.fire({
-                icon: 'error',
-                title: 'No Customer Selected',
-                text: 'Please select a customer before placing the order.'
-            });
-            return;
-        }
-
-        // Create the order in the model
-        const newOrder = this.orderModel.createOrder(
-            this.currentOrder.customer.id,
-            this.currentOrder.items,
-            this.currentOrder.total
-        );
-
-        Swal.fire({
-            icon: 'success',
-            title: 'Order Placed!',
-            text: `Order #${newOrder.id} for ${this.currentOrder.customer.name} has been placed successfully. Total: $${this.currentOrder.total.toFixed(2)}`,
-            showConfirmButton: true
-        }).then(() => {
-            // Reset the current order (keep the same customer)
-            this.currentOrder = {
-                customer: this.currentOrder.customer,
-                items: [],
-                total: 0
-            };
-            this.updateCartDisplay();
-        });
-    }
+            </div>
+        `;
+        container.append(card);
+    });
 }
 
-// Initialize the controller when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-    new OrderController();
+function initCustomers() {
+    const customersList = $("#customerDatalistOptions");
+    customersList.empty();
+    customers.forEach(customer => {
+        customersList.append(`<option value="${customer.name}">`);
+    });
+}
+
+$(document).on("click", ".add-to-cart", function() {
+    const itemId = parseInt($(this).data("id"));
+    const item = items.find(i => i.id === itemId);
+
+    if (!item) {
+        console.error("Item not found with ID:", itemId);
+        return;
+    }
+
+    const existingItem = cartItems.find(ci => ci.item.id === itemId);
+
+    if (existingItem) {
+        if (existingItem.quantity >= item.stock) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Out of Stock',
+                text: `Only ${item.stock} ${item.desc} available`
+            });
+            return;
+        }
+        existingItem.quantity += 1;
+    } else {
+        cartItems.push({
+            item: item,
+            quantity: 1
+        });
+    }
+    updateCartDisplay();
+    showCartNotification(item.desc);
 });
+
+function updateCartDisplay() {
+    const cartContainer = $("#item_cart");
+    cartContainer.empty();
+
+    if (cartItems.length === 0) {
+        cartContainer.append('<p class="text-muted">Your cart is empty</p>');
+        return;
+    }
+
+    let total = 0;
+
+    cartItems.forEach((cartItem, index) => {
+        const item = cartItem.item;
+        const quantity = cartItem.quantity;
+        const itemTotal = item.price * quantity;
+        total += itemTotal;
+
+        const cartItemHtml = `
+        <div class="card mb-3 cart-item" data-id="${item.id}">
+            <div class="row g-0">
+                <div class="col-md-3">
+                    <img src="${item.picture}" class="img-fluid rounded-start" alt="${item.desc}">
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">${item.desc}</h5>
+                            <button class="btn btn-sm btn-outline-danger remove-item">
+                                &times;
+                            </button>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="quantity-controls d-flex align-items-center">
+                                <button class="btn btn-sm btn-outline-secondary decrease-quantity">
+                                    <img src="../assets/icon/minus.png" width="16" height="16" alt="Decrease">
+                                </button>
+                                <span class="mx-2 quantity">${quantity}</span>
+                                <button class="btn btn-sm btn-outline-secondary increase-quantity">
+                                    <img src="../assets/icon/plus.png" width="16" height="16" alt="Increase">
+                                </button>
+                            </div>
+                            <div>
+                                <span class="fw-bold">Rs. ${itemTotal.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+        cartContainer.append(cartItemHtml);
+    });
+
+    cartContainer.append(`
+        <div class="d-flex justify-content-between align-items-center mt-3 p-3 bg-light rounded">
+            <h5 class="mb-0">Total:</h5>
+            <h5 class="mb-0">Rs. ${total.toFixed(2)}</h5>
+        </div>
+    `);
+}
+
+$(document).on('click', '.increase-quantity', function() {
+    const card = $(this).closest('.cart-item');
+    const itemId = parseInt(card.data('id'));
+    const cartItem = cartItems.find(ci => ci.item.id === itemId);
+
+    if (!cartItem) return;
+
+    // Check stock
+    const item = items.find(i => i.id === itemId);
+    if (cartItem.quantity >= item.stock) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Out of Stock',
+            text: `Only ${item.stock} ${item.desc} available`
+        });
+        return;
+    }
+
+    cartItem.quantity += 1;
+    updateCartDisplay();
+});
+
+$(document).on('click', '.decrease-quantity', function() {
+    const card = $(this).closest('.cart-item');
+    const itemId = parseInt(card.data('id'));
+    const cartItemIndex = cartItems.findIndex(ci => ci.item.id === itemId);
+
+    if (cartItemIndex === -1) return;
+
+    cartItems[cartItemIndex].quantity -= 1;
+
+    if (cartItems[cartItemIndex].quantity < 1) {
+        cartItems.splice(cartItemIndex, 1);
+    }
+
+    updateCartDisplay();
+});
+
+$(document).on('click', '.remove-item', function() {
+    const card = $(this).closest('.cart-item');
+    const itemId = parseInt(card.data('id'));
+    cartItems = cartItems.filter(ci => ci.item.id !== itemId);
+    updateCartDisplay();
+});
+
+$(document).on("click", "#continue", function(e) {
+    e.preventDefault();
+    const customerName = $("#search_customer_input").val().trim();
+
+    if (!customerName || !customers.some(c => c.name === customerName)) {
+        Swal.fire('Error', 'Please select a valid customer', 'error');
+        return;
+    }
+
+    if (cartItems.length === 0) {
+        Swal.fire('Error', 'Please add items to your cart', 'error');
+        return;
+    }
+
+    const orderItems = cartItems.map(cartItem => ({
+        id: cartItem.item.id,
+        name: cartItem.item.desc,
+        price: cartItem.item.price,
+        quantity: cartItem.quantity,
+        total: cartItem.item.price * cartItem.quantity
+    }));
+
+    const total = orderItems.reduce((sum, item) => sum + item.total, 0);
+
+    Swal.fire({
+        title: 'Confirm Order',
+        html: `
+            <p>Customer: <strong>${customerName}</strong></p>
+            <p>Items: <strong>${orderItems.reduce((sum, item) => sum + item.quantity, 0)}</strong></p>
+            <p>Total: <strong>Rs. ${total.toFixed(2)}</strong></p>
+            <p>Are you sure you want to place this order?</p>
+        `,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Place Order'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            cartItems.forEach(cartItem => {
+                const item = items.find(i => i.id === cartItem.item.id);
+                if (item) {
+                    item.stock -= cartItem.quantity;
+                }
+            });
+
+            const order = new OrderModel(customerName, orderItems);
+            order_db.push(order);
+
+            resetCart();
+            getItems();
+
+            Swal.fire(
+                'Order Placed!',
+                'Your order has been successfully placed.',
+                'success'
+            );
+        }
+    });
+});
+
+function resetCart() {
+    cartItems = [];
+    updateCartDisplay();
+}
+
+function showCartNotification(itemName) {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true
+    });
+
+    Toast.fire({
+        icon: 'success',
+        title: `${itemName} added to cart`
+    });
+}

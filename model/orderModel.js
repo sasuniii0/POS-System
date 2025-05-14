@@ -1,9 +1,9 @@
 export default class OrderModel {
-    constructor(customerId,itemId,name,quantityOnHand,price) {
-        this.customerId = customerId;
-        this.itemId = itemId;
-        this.name=name;
-        this.quantityOnHand = quantityOnHand;
-        this.price = price;
+    constructor(customerName, items) {
+        this.customerName = customerName;
+        this.items = items;
+        this.date = new Date();
+        this.total = items.reduce((sum, item) => sum + item.total, 0);
+        this.status = "Pending"; // or whatever status system you use
     }
 }

@@ -46,7 +46,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="../pages/invoice.html">
                             <img src="../assets/icon/icons8-invoice-96.png"  width="40px" height="40px">
-                            Login</a>
+                            Invoice</a>
                     <li class="nav-item">
                         <a class="nav-link" href="../pages/setting.html">
                             <img src="../assets/icon/icons8-setting-90.png" width="40px" height="40px">
@@ -79,99 +79,25 @@
 
 
                     <!-- Search Bar -->
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <button class="btn btn-primary" type="button">
-                        <i class="bi bi-search"></i>
-                    </button>
                 </div>
             </div>
             <div id="fullPg">
                 <section id="sidePg">
-                    <div class="card" style="width: 18rem;">
-                        <img src="../assets/photos/images.jpg" class="card-img-top" alt="photo6"   >
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <div class="cart-options">
-                                <img src="../assets/icon/shopping-cart.png" width="30px" height="30px" class="shopping-cart">
-                                <a href="#" class="btn btn-primary">Add to Cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card" style="width: 18rem;">
-                        <img src="../assets/photos/images%20(2).jpg" class="card-img-top" alt="photo5" >
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <div class="cart-options">
-                                <img src="../assets/icon/shopping-cart.png" width="30px" height="30px" class="shopping-cart">
-                                <a href="#" class="btn btn-primary">Add to Cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card" style="width: 18rem;">
-                        <img src="../assets/photos/images%20(2).jpg" class="card-img-top" alt="photo4" >
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <div class="cart-options">
-                                <img src="../assets/icon/shopping-cart.png" width="30px" height="30px" class="shopping-cart">
-                                <a href="#" class="btn btn-primary">Add to Cart</a>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="row" id="item_tbody"></div>
 
                 </section>
                 <section id="rightSidePg">
-                    <p id="text"><strong>Current Order </strong></p>
-                    <br>
-                    <div id="photo">
-                        <img src="../assets/icon/boy.png" width="20px" height="20px"> John Doe
-                        <div class="dropdown-center">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Centered dropdown
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Action two</a></li>
-                                <li><a class="dropdown-item" href="#">Action three</a></li>
-                            </ul>
-                        </div>
+                    <p id="text" class="fs-5"><strong>Current Order </strong></p>
+                    <div class="mb-3">
+                        <label for="search_customer_input" class="form-label">Customer</label>
+                        <input list="customerDatalistOptions" id="search_customer_input" class="form-control" placeholder="Select customer">
+                        <datalist id="customerDatalistOptions"></datalist>
                     </div>
-                    <br>
-                    <div id="cart">
-                        <span class="border border-info">
-                            <div class="card-cart" style="width: 18rem;">
-                            <img src="../assets/photos/download%20(2).jpg" class="cart-image" alt="photo1" >
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <div class="cart-options">
-                                    <img src="../assets/icon/plus.png" width="30px" height="30px" class="quantity-maintainer">
-                                    <p class="quantity-handling">1</p>
-                                    <img src="../assets/icon/minus.png" width="30px" height="30px" class="quantity-maintainer">
-                                </div>
-                            </div>
+                    <div id="cart" class="p-3 bg-light rounded-3">
+                        <div id="item_cart" class="mb-3">
                         </div>
-                        </span>
-
-                        <span class="border border-info">
-                            <div class="card-cart" style="width: 18rem;">
-                            <img src="../assets/photos/download%20(2).jpg" class="cart-image" alt="photo1" >
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <div class="cart-options">
-                                    <img src="../assets/icon/plus.png" width="30px" height="30px" class="quantity-maintainer">
-                                    <p class="quantity-handling">1</p>
-                                    <img src="../assets/icon/minus.png" width="30px" height="30px" class="quantity-maintainer">
-                                </div>
-                            </div>
-
-                        </div>
-                        </span>
+                        <button type="button" class="btn btn-primary" id="continue">Place Order</button>
                     </div>
-
-                    <button type="button" class="btn btn-primary" id="continue">Place Order</button>
-
                 </section>
             </div>
         </section>

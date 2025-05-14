@@ -67,22 +67,16 @@ body{
 #continue{
 
 }
-.cart-options{
+/*.cart-options{
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
-}
+}*/
 #photo{
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 30px;
-
-}
-#cart{
-    display: block;
-    justify-content: flex-start;
-    gap: 15px;
 
 }
 .cart-image{
@@ -95,4 +89,5 @@ body{
     display: flex;
     justify-content: space-between;
     gap: 15px;
+    padding: 10px;
 }
