@@ -4,6 +4,26 @@ import { item_db} from "../db/db.js";
 let selectedItemIndex = null;
 let currentImageFile = null;
 
+// Image preview functionality
+document.getElementById('formFileMultiple').addEventListener('change', function(e) {
+    const preview = document.getElementById('imagePreview');
+    preview.innerHTML = '';
+
+    if (this.files && this.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            preview.appendChild(img);
+        }
+
+        reader.readAsDataURL(this.files[0]);
+    } else {
+        preview.innerHTML = '<span class="text-muted">Preview will appear here</span>';
+    }
+});
+
 
 //load item records
 function loadItems(){

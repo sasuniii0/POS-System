@@ -1,18 +1,100 @@
-body{
-    background: #dcdcdc;
-    font-size: 15px;
+:root {
+    --primary-color: #0c38bf;
+    --secondary-color: #1cc88a;
+    --accent-color: #f6c23e;
+    --light-bg: #f8f9fc;
 }
 
-#item-sec{
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
+body {
+    background-color: #f5f7fb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-section{
-    background: #ffffff;
-    border-radius: 30px;
-    padding: 15px;
-    width: 50%;
-    margin: 10px;
-    gap: 10px;
+
+.navbar {
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.nav-link {
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
+}
+
+#item-sec {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+    padding: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+#title {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid ;
+}
+
+.form-floating > .form-control {
+    border-left: 3px solid var(--primary-color);
+}
+
+.form-floating > .form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+}
+
+.btn-success {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-info {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(78, 115, 223, 0.05);
+    transform: scale(1.01);
+    transition: all 0.2s ease;
+}
+
+
+
+#itemForm {
+    background-color: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.action-buttons .btn {
+    margin-right: 0.5rem;
+    min-width: 100px;
+}
+
+#imagePreview {
+    width: 100px;
+    height: 100px;
+    border: 1px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#imagePreview img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.product-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
 }

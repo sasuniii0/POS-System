@@ -8,42 +8,42 @@ let items = [
         desc: "Cetaphil",
         price: 20000.00,
         stock: 200,
-        picture: "../assets/photos/download.jpg"
+        picture: "../assets/photos/pic1.jpeg"
     },
     {
         id: 2,
         desc: "Dove",
         price: 30000.00,
         stock: 100,
-        picture: "../assets/photos/images.jpg"
+        picture: "../assets/photos/pic2.jpeg"
     },
     {
         id: 3,
         desc: "Lux",
         price: 15000.00,
         stock: 50,
-        picture: "../assets/photos/download.jpg"
+        picture: "../assets/photos/pic3.jpeg"
     },
     {
         id: 4,
         desc: "Nivea",
         price: 50000.00,
         stock: 20,
-        picture: "../assets/photos/images.jpg"
+        picture: "../assets/photos/pic4.jpeg"
     },
     {
         id: 5,
         desc: "Pond's",
         price: 25000.00,
         stock: 10,
-        picture: "../assets/photos/images.jpg"
+        picture: "../assets/photos/pic5.jpeg"
     },
     {
         id: 6,
         desc: "Vaseline",
         price: 18000.00,
         stock: 5,
-        picture: "../assets/photos/download.jpg"
+        picture: "../assets/photos/pic6.jpeg"
     }
 ];
 
@@ -77,7 +77,7 @@ function getItems(filter = "") {
     filteredItems.forEach((item, index) => {
         const card = `
             <div class="card mb-3" style="width: 18rem;">
-                <img src="${item.picture}" class="card-img-top" alt="${item.desc}">
+                <img src="${item.picture}" class="card-img-top" alt="${item.desc}" height="330px">
                 <div class="card-body">
                     <h5 class="card-title">${item.desc}</h5>
                     <p class="card-text">Rs. ${item.price.toFixed(2)}</p>

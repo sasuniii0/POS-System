@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>orders</title>
-
-  <!--link css bootstrap-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <title>Place Order</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../assets/style/order.css">
+
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="../assets/icon/logoCleva.png"  height="70px" alt="head">            </a>
+                <img src="../assets/icon/logoCleva.png" height="70px" alt="Company Logo">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -24,31 +25,31 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../index.html">
-                            <img src="../assets/icon/icons8-home-48.png"  width="40px" height="40px">
+                            <img src="../assets/icon/icons8-home-48.png" width="40px" height="40px" alt="Home">
                             Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../pages/customer.html">
-                            <img src="../assets/icon/icons8-customer-96.png"  width="40px" height="40px">
+                            <img src="../assets/icon/icons8-customer-96.png" width="40px" height="40px" alt="Customers">
                             Customer</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../pages/item.html">
-                            <img src="../assets/icon/icons8-item-64.png"  width="40px" height="40px">
-                            Item</a>
+                            <img src="../assets/icon/icons8-item-64.png" width="40px" height="40px" alt="Products">
+                            Products</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../pages/placeOrder.html">
-                            <img src="../assets/icon/icons8-order-96.png"  width="40px" height="40px">
+                            <img src="../assets/icon/icons8-order-96.png" width="40px" height="40px" alt="Orders">
                             Orders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../pages/invoice.html">
-                            <img src="../assets/icon/icons8-invoice-96.png"  width="40px" height="40px">
+                            <img src="../assets/icon/icons8-invoice-96.png" width="40px" height="40px" alt="Invoices">
                             Invoice</a>
                     <li class="nav-item">
                         <a class="nav-link" href="../pages/setting.html">
-                            <img src="../assets/icon/icons8-setting-90.png" width="40px" height="40px">
+                            <img src="../assets/icon/icons8-setting-90.png" width="40px" height="40px" alt="Settings">
                             Settings</a>
                     </li>
                 </ul>
@@ -61,26 +62,84 @@
         </div>
     </nav>
 </header>
+
 <section>
     <div class="container">
         <section>
             <div id="fullPg">
                 <section id="sidePg">
-                    <h1 class="h2" id="title">Place Order</h1>
+                    <h1 class="h2" id="title"><i class="bi bi-cart-plus"></i> Place Order</h1>
 
-                    <div class="row" id="item_tbody"></div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search products..." id="productSearch">
+                            <button class="btn btn-primary" type="button">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="item_tbody">
+                        <div class="col">
+                            <div class="card product-card">
+                                <img src="../assets/photos/pic1.jpeg" class="card-img-top product-img" alt="Product">
+                                <div class="card-body">
+                                    <h5 class="card-title">Product Name</h5>
+                                    <p class="card-text">Rs. 1,250.00</p>
+                                    <p class="text-muted">In stock: 15</p>
+                                    <button class="btn btn-primary w-100 add-to-cart">
+                                        <i class="bi bi-cart-plus"></i> Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
+
                 <section id="rightSidePg">
-                    <p id="text" class="fs-5"><strong>Current Order </strong></p>
+                    <h2 class="h4"><i class="bi bi-cart-check"></i> Current Order</h2>
+
                     <div class="mb-3">
                         <label for="search_customer_input" class="form-label">Customer</label>
                         <input list="customerDatalistOptions" id="search_customer_input" class="form-control" placeholder="Select customer">
-                        <datalist id="customerDatalistOptions"></datalist>
+                        <datalist id="customerDatalistOptions">
+                            <option value="John Doe">
+                            <option value="Jane Smith">
+                        </datalist>
                     </div>
+
                     <div id="cart" class="p-3 bg-light rounded-3">
                         <div id="item_cart" class="mb-3">
+                            <div class="card cart-item">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="card-title">Product Name</h5>
+                                        <button class="btn btn-sm btn-outline-danger remove-item">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                    <p class="card-text">Rs. 1,250.00 x 2 = Rs. 2,500.00</p>
+                                    <div class="quantity-control">
+                                        <button class="btn btn-sm btn-outline-secondary decrease-qty">
+                                            <i class="bi bi-dash"></i>
+                                        </button>
+                                        <span class="quantity-display">2</span>
+                                        <button class="btn btn-sm btn-outline-secondary increase-qty">
+                                            <i class="bi bi-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <button type="button" class="btn btn-primary" id="continue">Place Order</button>
+
+                        <div class="total-display d-flex justify-content-between">
+                            <span>Total:</span>
+                            <span>Rs. 2,500.00</span>
+                        </div>
+
+                        <button type="button" class="btn btn-primary mt-3" id="continue">
+                            <i class="bi bi-check-circle"></i> Place Order
+                        </button>
                     </div>
                 </section>
             </div>
@@ -88,12 +147,9 @@
     </div>
 </section>
 
-
-<!--link js bootstrap-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../assets/lib/jquery-3.7.1.min.js"></script>
 <script src="../controller/orderController.js" type="module"></script>
-
 </body>
 </html>
